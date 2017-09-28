@@ -45,6 +45,12 @@ _todo: add a script to make this happen automagically?_
 3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
 4. Run `vagrant provision`
 
+### Update plugins via composer
+While Composer works on both the host (Windows) machine and the guest (Vagrant) machine, you'll probably want to run `composer install` from inside the Vagrant box. Many of the composer packages used have specific requirements for various PHP components, which might be missing from your Windows machine. Running `composer install` from inside Vagrant bypasses that problem.
+
+### Build the theme
+Building the theme should also be done on the host (Windows) machine. Go to the theme folder and run `yarn run build:production`
+
 ## Documentation
 ### Global composer file
 Codelight's private repositories are stored in our global composer.json file, which is merged to every site's own composer.json using [Composer Merge Plugin](https://github.com/wikimedia/composer-merge-plugin). If you need to add a new private or github-based repository, please add it to composer.global.json located in `dev/_tools/composer/composer.global.json`, commit and push.
