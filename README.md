@@ -27,26 +27,28 @@ dev/              # → Root folder for all projects
 ### Set up Trellis
 _Note: The instructions here prefix Trellis folder with an underscore. This differs from the official docs._
 1. Ensure you've installed all requirements listed [here](https://roots.io/trellis/docs/installing-trellis/)
-2. In Windows, open git bash & create a new root directory: 
+2. In Windows, open git bash & create a new root directory:  
 `$ mkdir dev && cd dev`
-3. Clone codelight/trellis: 
+3. Clone codelight/trellis:  
 `$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
-4. Clone codelight/bedrock: 
+4. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME]`
-5. Make a copy of the local environment config folder example: 
+5. Make a copy of the local environment config folder example:  
 `$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development` (this folder will not be stored in the repo)
 6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
 7. Run `vagrant up`
 8. Run `vagrant ssh` to access your new shiny box via SSH
 
 ### Create another synced folder and add our required tools
-1. In Windows, open git bash & create a new synced folder for tools: `cd dev && mkdir _tools`
-2. Clone our composer repo: `cd _tools && git clone git@github.com:codelight-eu/composer-global.git composer`
+1. In Windows, open git bash & create a new synced folder for tools:  
+`$cd dev && mkdir _tools`
+2. Clone our composer repo:  
+`$ cd _tools && git clone git@github.com:codelight-eu/composer-global.git composer`
 _todo: add a script to make this happen automagically?_
 
 ### Add a new local site
 1. In Windows, open git bash & go to your root directory: `$ cd dev`
-2. Clone codelight/bedrock: 
+2. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME]`
 3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
 4. Run `vagrant provision`
