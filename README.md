@@ -36,8 +36,8 @@ _Note: The instructions here prefix Trellis folder with an underscore. This diff
 5. Make a copy of the local environment config folder example (will not be stored in the repo):  
 `$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
 6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
-7. Run `vagrant up`
-8. Run `vagrant ssh` to access your new shiny box via SSH
+7. Run `$ cd _trellis && vagrant up`
+8. Run `$ vagrant ssh` to access your new shiny box via SSH
 
 ### Create another synced folder and add our required tools
 1. In Windows, open git bash & create a new synced folder for tools:  
@@ -51,7 +51,7 @@ _todo: add a script to make this happen automagically?_
 2. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME]`
 3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
-4. Run `vagrant provision`
+4. Run `$ cd _trellis && vagrant provision`
 
 ### Update plugins via composer
 While Composer works on both the host (Windows) machine and the guest (Vagrant) machine, you'll probably want to run `composer install` from inside the Vagrant box. Many of the composer packages used have specific requirements for various PHP components, which might be missing from your Windows machine. Running `composer install` from inside Vagrant bypasses that problem.
