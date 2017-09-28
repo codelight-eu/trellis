@@ -21,4 +21,12 @@ vagrant_plugins:
 #   mount_options: []
 #   bindfs_options: {}
 # See https://www.vagrantup.com/docs/synced-folders/basic_usage.html#mount_options
-vagrant_synced_folders: []
+vagrant_synced_folders:
+- local_path: ../_tools
+  destination: /srv/tools/
+  create: true
+  type: nfs
+  bindfs: true
+  mount_options: []
+  bindfs_options: {}
+
