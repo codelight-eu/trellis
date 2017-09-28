@@ -33,8 +33,8 @@ _Note: The instructions here prefix Trellis folder with an underscore. This diff
 `$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
 4. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME]`
-5. Make a copy of the local environment config folder example:  
-`$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development` (this folder will not be stored in the repo)
+5. Make a copy of the local environment config folder example (will not be stored in the repo):  
+`$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
 6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
 7. Run `vagrant up`
 8. Run `vagrant ssh` to access your new shiny box via SSH
