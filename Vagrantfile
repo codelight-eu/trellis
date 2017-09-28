@@ -71,7 +71,7 @@ Vagrant.configure('2') do |config|
 
   if Vagrant::Util::Platform.windows? and !Vagrant.has_plugin? 'vagrant-winnfsd'
     trellis_config.wordpress_sites.each_pair do |name, site|
-      config.vm.synced_folder local_site_path(site), remote_site_path(name, site), owner: 'vagrant', group: 'www-data', mount_options: ['dmode=776', 'fmode=775']
+      config.vm.synced_folder local_site_path(site), remote_site_path(name, site), owner: 'vagrant', group: 'www-data', mount_options: ['dmode=776', 'fmode=775', 'rw', 'vers=4', 'tcp', 'fsc' ,'actimeo=2']
     end
 
     config.vm.synced_folder ANSIBLE_PATH, ANSIBLE_PATH_ON_VM, mount_options: ['dmode=755', 'fmode=644']
