@@ -40,10 +40,8 @@ _Note: The instructions here prefix Trellis folder with an underscore. This diff
 8. Run `$ vagrant ssh` to access your new shiny box via SSH
 
 ### Create another synced folder and add our required tools
-1. In Windows, open git bash & create a new synced folder for tools:  
-`$cd dev && mkdir _tools`
-2. Clone our composer repo:  
-`$ cd _tools && git clone git@github.com:codelight-eu/composer-global.git composer`
+1. In Windows, clone our composer repo into the auto-generated tools folder:  
+`$ cd dev/_tools && git clone git@github.com:codelight-eu/composer-global.git composer`
 _todo: add a script to make this happen automagically?_
 
 ### Add a new local site
