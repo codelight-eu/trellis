@@ -69,3 +69,5 @@ In order to override the default config with local values, create a file called 
 ```
 vagrant_memory: 2048
 ```
+### Troubleshooting
+Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
