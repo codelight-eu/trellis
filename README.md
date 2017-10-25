@@ -73,3 +73,5 @@ vagrant_memory: 2048
 ```
 ### Troubleshooting
 Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
+
+If you change folder names you may need to do vagrant halt and up for it to register.
