@@ -35,7 +35,7 @@ _Note: The instructions here prefix Trellis folder with an underscore. This diff
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME] && rm -rf [SITENAME]/.git`
 5. Make a copy of the local environment config folder example (will not be stored in the repo):  
 `$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
-6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
+6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
 7. Run `$ cd _trellis && vagrant up`
 8. Run `$ vagrant ssh` to access your new shiny box via SSH
 
@@ -48,7 +48,7 @@ _todo: add a script to make this happen automagically?_
 1. In Windows, open git bash & go to your root directory: `$ cd dev`
 2. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME] && rm -rf [NEW_SITENAME]/.git`
-3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
+3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
 4. Run `$ cd _trellis && vagrant provision`
 
 ### Update plugins via composer
