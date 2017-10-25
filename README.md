@@ -49,6 +49,7 @@ _todo: add a script to make this happen automagically?_
 1. In Windows, open git bash & go to your root directory: `$ cd dev`
 2. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME] && rm -rf [NEW_SITENAME]/.git`
+Maybe use [SITENAME].local as the folder name.
 3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
 4. Run `$ cd _trellis && vagrant provision`
 
