@@ -33,6 +33,7 @@ _Note: The instructions here prefix Trellis folder with an underscore. This diff
 `$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
 4. Clone codelight/bedrock:  
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME] && rm -rf [SITENAME]/.git`
+Maybe use [SITENAME].local as the folder name.
 5. Make a copy of the local environment config folder example (will not be stored in the repo):  
 `$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
 6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
