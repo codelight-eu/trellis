@@ -72,6 +72,14 @@ In order to override the default config with local values, create a file called 
 vagrant_memory: 2048
 ```
 ### Troubleshooting
-Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
+* Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
 
-If you change folder names you may need to do vagrant halt and up for it to register.
+* If you change folder names you may need to do vagrant halt and up for it to register.
+
+* Vagrant does not currenlt work with VirtualBox 5.2, use 5.1.3 instead
+
+* For error "Vagrant was unable to mount VirtualBox shared folders. This is usually
+because the filesystem "vboxsf" is not available.", run these before vagrant up 
+vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-winnfsd
+vagrant plugin install vagrant-bindfs
