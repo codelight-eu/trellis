@@ -76,10 +76,9 @@ vagrant_memory: 2048
 
 * If you change folder names you may need to do vagrant halt and up for it to register.
 
-* Vagrant does not currenlt work with VirtualBox 5.2, use 5.1.3 instead
+* Vagrant currently doesn't work with VirtualBox 5.2. Use 5.1.3 instead
 
-* For error "Vagrant was unable to mount VirtualBox shared folders. This is usually
-because the filesystem "vboxsf" is not available.", run these before vagrant up 
-vagrant plugin install vagrant-vbguest
-vagrant plugin install vagrant-winnfsd
-vagrant plugin install vagrant-bindfs
+* In case you are seeing the following error: _"Vagrant was unable to mount VirtualBox shared folders. This is usually because the filesystem "vboxsf" is not available."_, before running `vagrant up` run the following commands:  
+`vagrant plugin install vagrant-vbguest`  
+`vagrant plugin install vagrant-winnfsd`  
+`vagrant plugin install vagrant-bindfs`  
