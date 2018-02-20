@@ -51,7 +51,7 @@ Vagrant.configure('2') do |config|
   end
 
   main_hostname, *hostnames = trellis_config.site_hosts_canonical
-  config.vm.hostname = main_hostname
+  config.vm.hostname = "codelight-trellis"
 
   if Vagrant.has_plugin?('vagrant-hostmanager') && !trellis_config.multisite_subdomains?
     redirects = trellis_config.site_hosts_redirects
@@ -71,7 +71,7 @@ Vagrant.configure('2') do |config|
 
   if Vagrant::Util::Platform.windows? and !Vagrant.has_plugin? 'vagrant-winnfsd'
     trellis_config.wordpress_sites.each_pair do |name, site|
-      config.vm.synced_folder local_site_path(site), remote_site_path(name, site), owner: 'vagrant', group: 'www-data', mount_options: ['dmode=776', 'fmode=775', 'rw', 'vers=4', 'tcp', 'fsc' ,'actimeo=2']
+      config.vm.synced_folder local_site_path(site), remote_site_path(name, site), owner: 'vagrant', group: 'www-data', mount_options: ['dmode=776', 'fmode=775']
     end
 
     config.vm.synced_folder ANSIBLE_PATH, ANSIBLE_PATH_ON_VM, mount_options: ['dmode=755', 'fmode=644']
@@ -140,10 +140,11 @@ Vagrant.configure('2') do |config|
     vb.name = config.vm.hostname
     vb.customize ['modifyvm', :id, '--cpus', vconfig.fetch('vagrant_cpus')]
     vb.customize ['modifyvm', :id, '--memory', vconfig.fetch('vagrant_memory')]
+    vb.customize ['modifyvm', :id, '--ioapic', vconfig.fetch('vagrant_ioapic', 'on')]
 
     # Fix for slow external network connections
-    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
-    vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
+    vb.customize ['modifyvm', :id, '--natdnshostresolver1', vconfig.fetch('vagrant_natdnshostresolver', 'on')]
+    vb.customize ['modifyvm', :id, '--natdnsproxy1', vconfig.fetch('vagrant_natdnsproxy', 'on')]
   end
 
   # VMware Workstation/Fusion settings
