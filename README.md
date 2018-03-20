@@ -51,7 +51,7 @@ _todo: add a script to make this happen automagically?_
 `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME] && rm -rf [NEW_SITENAME]/.git`
 Maybe use [SITENAME].local as the folder name.
 3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
-4. Run `$ cd _trellis && vagrant halt` then `$ vagran up` and then `$ vagrant provision`
+4. Run `$ cd _trellis && vagrant halt` then `$ vagrant up` and then `$ vagrant provision`
 
 ### Update plugins via composer
 While Composer works on both the host (Windows) machine and the guest (Vagrant) machine, you'll probably want to run `composer install` from inside the Vagrant box. Many of the composer packages used have specific requirements for various PHP components, which might be missing from your Windows machine. Running `composer install` from inside Vagrant bypasses that problem.
