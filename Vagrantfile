@@ -51,7 +51,7 @@ Vagrant.configure('2') do |config|
   end
 
   main_hostname, *hostnames = trellis_config.site_hosts_canonical
-  config.vm.hostname = codelight-trellis
+  config.vm.hostname = 'codelight-trellis'
 
   if Vagrant.has_plugin?('vagrant-hostmanager') && !trellis_config.multisite_subdomains?
     redirects = trellis_config.site_hosts_redirects
