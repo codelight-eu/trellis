@@ -1,84 +1,109 @@
-# Trellis, pre-configured for Codelight
-This is a fork of the official Trellis repo, configured for Codelight's use. It should be kept more or less up to date with the official repo. *Note that this repository is public.*
+# Trellis
+[![Release](https://img.shields.io/github/release/roots/trellis.svg?style=flat-square)](https://github.com/roots/trellis/releases)
+[![Build Status](https://img.shields.io/travis/roots/trellis.svg?style=flat-square)](https://travis-ci.org/roots/trellis)
 
-For anything not covered in the quick start guide below, see the [official Trellis docs](https://roots.io/trellis/docs/installing-trellis/) or the [official repo](https://github.com/roots/trellis).
+Ansible playbooks for setting up a LEMP stack for WordPress.
 
-Instructions below assume you're running a Windows machine.
+- Local development environment with Vagrant
+- High-performance production servers
+- One-command deploys for your [Bedrock](https://roots.io/bedrock/)-based WordPress sites
 
-## Structure
-```shell
-dev/              # → Root folder for all projects
-├── trellis/      # → Your clone of this repository
-└── site1/        # → A Bedrock-based WordPress site
-    └── web/
-        ├── app/  # → WordPress content directory (themes, plugins, etc.)
-        └── wp/   # → WordPress core (don't touch!)
-└── site2/        # → A Bedrock-based WordPress site
-    └── web/
-        ├── app/  # → WordPress content directory (themes, plugins, etc.)
-        └── wp/   # → WordPress core (don't touch!)
-└── site3/        # → A Bedrock-based WordPress site
-    └── web/
-        ├── app/  # → WordPress content directory (themes, plugins, etc.)
-        └── wp/   # → WordPress core (don't touch!)
-```
+## What's included
 
-## Quick start
-### Set up Trellis
-_Note: The instructions here prefix Trellis folder with an underscore. This differs from the official docs._
-1. Ensure you've installed all requirements listed [here](https://roots.io/trellis/docs/installing-trellis/)
-2. In Windows, open git bash & create a new root directory:  
-`$ mkdir dev && cd dev`
-3. Clone codelight/trellis:  
-`$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
-4. Clone codelight/bedrock:  
-`$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME] && rm -rf [SITENAME]/.git`
-Maybe use [SITENAME].local as the folder name.
-5. Make a copy of the local environment config folder example (will not be stored in the repo):  
-`$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
-6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
-7. Run `$ cd _trellis && vagrant up`
-8. Run `$ vagrant ssh` to access your new shiny box via SSH
+Trellis will configure a server with the following and more:
 
-### Create another synced folder and add our required tools
-1. In Windows, clone our composer repo into the auto-generated tools folder:  
-`$ cd dev/_tools && git clone git@github.com:codelight-eu/composer-global.git composer`
-_todo: add a script to make this happen automagically?_
-
-### Add a new local site
-1. In Windows, open git bash & go to your root directory: `$ cd dev`
-2. Clone codelight/bedrock:  
-`$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME] && rm -rf [NEW_SITENAME]/.git`
-Maybe use [SITENAME].local as the folder name.
-3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
-4. Run `$ cd _trellis && vagrant halt` then `$ vagrant up` and then `$ vagrant provision`
-
-### Update plugins via composer
-While Composer works on both the host (Windows) machine and the guest (Vagrant) machine, you'll probably want to run `composer install` from inside the Vagrant box. Many of the composer packages used have specific requirements for various PHP components, which might be missing from your Windows machine. Running `composer install` from inside Vagrant bypasses that problem.
-
-### Build the theme
-Building the theme should also be done on the host (Windows) machine. Go to the theme folder and run `yarn run build:production`
+* Ubuntu 16.04 Xenial LTS
+* Nginx (with optional FastCGI micro-caching)
+* PHP 7.2
+* MariaDB (a drop-in MySQL replacement)
+* SSL support (scores an A+ on the [Qualys SSL Labs Test](https://www.ssllabs.com/ssltest/))
+* Let's Encrypt integration for free SSL certificates
+* HTTP/2 support (requires SSL)
+* Composer
+* WP-CLI
+* sSMTP (mail delivery)
+* MailHog
+* Memcached
+* Fail2ban
+* ferm
 
 ## Documentation
-### Global composer file
-Codelight's private repositories are stored in our global composer.json file, which is merged to every site's own composer.json using [Composer Merge Plugin](https://github.com/wikimedia/composer-merge-plugin). If you need to add a new private or github-based repository, please add it to composer.global.json located in `dev/_tools/composer/composer.global.json`, commit and push.
 
-### Development
-When you install a plugin from github via composer, it comes with the git repo set up. In most cases, you should be able to use that same repository for development and push your changes back up to github.
+Full documentation is available at [https://roots.io/trellis/docs/](https://roots.io/trellis/docs/).
 
-### Local config
-In order to override the default config with local values, create a file called vagrant.local.yml in trellis/ directory. Values defined in this file will override the values defined in vagrant.default.yml. For example, to increase the RAM assigned to the virtual machine, add the following line to vagrant.local.yml
+## Requirements
+
+Make sure all dependencies have been installed before moving on:
+
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 4.3.10
+* [Vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
+
+## Installation
+
+The recommended directory structure for a Trellis project looks like:
+
+```shell
+example.com/      # → Root folder for the project
+├── trellis/      # → Your clone of this repository
+└── site/         # → A Bedrock-based WordPress site
+    └── web/
+        ├── app/  # → WordPress content directory (themes, plugins, etc.)
+        └── wp/   # → WordPress core (don't touch!)
 ```
-vagrant_memory: 2048
-```
-### Troubleshooting
-* Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
 
-* If you change folder names you may need to do vagrant halt and up for it to register.
+See a complete working example in the [roots-example-project.com repo](https://github.com/roots/roots-example-project.com).
 
-* Vagrant currently doesn't work with VirtualBox 5.2. Use 5.1.3 instead
+1. Create a new project directory: `$ mkdir example.com && cd example.com`
+2. Clone Trellis: `$ git clone --depth=1 git@github.com:roots/trellis.git && rm -rf trellis/.git`
+3. Clone Bedrock: `$ git clone --depth=1 git@github.com:roots/bedrock.git site && rm -rf site/.git`
 
-* In case you are seeing the following error: _"Vagrant was unable to mount VirtualBox shared folders. This is usually because the filesystem "vboxsf" is not available."_, before running `vagrant up` run the following commands:  
-`vagrant plugin install vagrant-vbguest`  
-`vagrant plugin install vagrant-winnfsd`  
-`vagrant plugin install vagrant-bindfs`  
+Windows user? [Read the Windows docs](https://roots.io/trellis/docs/windows/) for slightly different installation instructions. VirtualBox is known to have poor performance in Windows — use VMware or [see some possible solutions](https://discourse.roots.io/t/virtualbox-performance-in-windows/3932).
+
+## Local development setup
+
+1. Configure your WordPress sites in `group_vars/development/wordpress_sites.yml` and in `group_vars/development/vault.yml`
+2. Run `vagrant up`
+
+[Read the local development docs](https://roots.io/trellis/docs/local-development-setup/) for more information.
+
+## Remote server setup (staging/production)
+
+For remote servers, installing Ansible locally is an additional requirement. See the [docs](https://roots.io/trellis/docs/remote-server-setup/#requirements) for more information.
+
+A base Ubuntu 16.04 server is required for setting up remote servers. OS X users must have [passlib](http://pythonhosted.org/passlib/install.html#installation-instructions) installed.
+
+1. Configure your WordPress sites in `group_vars/<environment>/wordpress_sites.yml` and in `group_vars/<environment>/vault.yml` (see the [Vault docs](https://roots.io/trellis/docs/vault/) for how to encrypt files containing passwords)
+2. Add your server IP/hostnames to `hosts/<environment>`
+3. Specify public SSH keys for `users` in `group_vars/all/users.yml` (see the [SSH Keys docs](https://roots.io/trellis/docs/ssh-keys/))
+4. Run `ansible-playbook server.yml -e env=<environment>` to provision the server
+
+[Read the remote server docs](https://roots.io/trellis/docs/remote-server-setup/) for more information.
+
+## Deploying to remote servers
+
+1. Add the `repo` (Git URL) of your Bedrock WordPress project in the corresponding `group_vars/<environment>/wordpress_sites.yml` file
+2. Set the `branch` you want to deploy
+3. Run `./bin/deploy.sh <environment> <site name>`
+4. To rollback a deploy, run `ansible-playbook rollback.yml -e "site=<site name> env=<environment>"`
+
+[Read the deploys docs](https://roots.io/trellis/docs/deploys/) for more information.
+
+## Contributing
+
+Contributions are welcome from everyone. We have [contributing guidelines](https://github.com/roots/guidelines/blob/master/CONTRIBUTING.md) to help you get started.
+
+## Gold sponsors
+
+Help support our open-source development efforts by [contributing to Trellis on OpenCollective](https://opencollective.com/trellis).
+
+<a href="https://kinsta.com/?kaid=OFDHAJIXUDIV"><img src="https://roots.io/app/uploads/kinsta.svg" alt="Kinsta" width="200" height="150"></a> <a href="https://www.harnessup.com/"><img src="https://roots.io/app/uploads/harness-software.svg" alt="Harness Software" width="200" height="150"></a> <a href="https://k-m.com/"><img src="https://roots.io/app/uploads/km-digital.svg" alt="KM Digital" width="200" height="150"></a> <a href="https://themeisle.com/"><img src="https://roots.io/app/uploads/sponsor-themeisle.svg" alt="ThemeIsle" width="200" height="150"></a>
+
+## Community
+
+Keep track of development and community news.
+
+* Participate on the [Roots Discourse](https://discourse.roots.io/)
+* Follow [@rootswp on Twitter](https://twitter.com/rootswp)
+* Read and subscribe to the [Roots Blog](https://roots.io/blog/)
+* Subscribe to the [Roots Newsletter](https://roots.io/subscribe/)
+* Listen to the [Roots Radio podcast](https://roots.io/podcast/)
