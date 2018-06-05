@@ -27,23 +27,31 @@ dev/              # → Root folder for all projects
 ### Set up Trellis
 _Note: The instructions here prefix Trellis folder with an underscore. This differs from the official docs._
 1. Ensure you've installed all requirements listed [here](https://roots.io/trellis/docs/installing-trellis/)
-2. In Windows, open git bash & create a new root directory: `$ mkdir dev && cd dev`
-3. Clone codelight/trellis: `$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
-4. Clone codelight/bedrock: `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME]`
-5. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
-6. Run `vagrant up`
-7. Run `vagrant ssh` to access your new shiny box via SSH
+2. In Windows, open git bash & create a new root directory:  
+`$ mkdir dev && cd dev`
+3. Clone codelight/trellis:  
+`$ git clone --depth=1 git@github.com:codelight-eu/trellis.git _trellis`
+4. Clone codelight/bedrock:  
+`$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [SITENAME] && rm -rf [SITENAME]/.git`
+Maybe use [SITENAME].local as the folder name.
+5. Make a copy of the local environment config folder example (will not be stored in the repo):  
+`$ cp -r _trellis/group_vars/development.example _trellis/group_vars/development`
+6. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
+7. Run `$ cd _trellis && vagrant up`
+8. Run `$ vagrant ssh` to access your new shiny box via SSH
 
 ### Create another synced folder and add our required tools
-1. In Windows, open git bash & create a new synced folder for tools: `cd dev && mkdir _tools`
-2. Clone our composer repo: `cd _tools && git clone git@github.com:codelight-eu/composer-global.git composer`
+1. In Windows, clone our composer repo into the auto-generated tools folder:  
+`$ cd dev/_tools && git clone git@github.com:codelight-eu/composer-global.git composer`
 _todo: add a script to make this happen automagically?_
 
 ### Add a new local site
 1. In Windows, open git bash & go to your root directory: `$ cd dev`
-2. Clone codelight/bedrock: `$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME]`
-3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml`
-4. Run `vagrant provision`
+2. Clone codelight/bedrock:  
+`$ git clone --depth=1 git@github.com:codelight-eu/bedrock.git [NEW_SITENAME] && rm -rf [NEW_SITENAME]/.git`
+Maybe use [SITENAME].local as the folder name.
+3. Configure your WordPress site in `_trellis/group_vars/development/wordpress_sites.yml` and in `_trellis/group_vars/development/vault.yml` (use .local instead of .dev)
+4. Run `$ cd _trellis && vagrant halt` then `$ vagrant up` and then `$ vagrant provision`
 
 ### Update plugins via composer
 While Composer works on both the host (Windows) machine and the guest (Vagrant) machine, you'll probably want to run `composer install` from inside the Vagrant box. Many of the composer packages used have specific requirements for various PHP components, which might be missing from your Windows machine. Running `composer install` from inside Vagrant bypasses that problem.
@@ -63,3 +71,14 @@ In order to override the default config with local values, create a file called 
 ```
 vagrant_memory: 2048
 ```
+### Troubleshooting
+* Make sure sitename.local is in hosts file without www at the beginning too. Local site opens from ```http://sitename.local```
+
+* If you change folder names you may need to do vagrant halt and up for it to register.
+
+* Vagrant currently doesn't work with VirtualBox 5.2. Use 5.1.3 instead
+
+* In case you are seeing the following error: _"Vagrant was unable to mount VirtualBox shared folders. This is usually because the filesystem "vboxsf" is not available."_, before running `vagrant up` run the following commands:  
+`vagrant plugin install vagrant-vbguest`  
+`vagrant plugin install vagrant-winnfsd`  
+`vagrant plugin install vagrant-bindfs`  
